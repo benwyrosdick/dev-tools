@@ -22,6 +22,26 @@ function readFileAsText(file: File): Promise<string> {
 const sanitizeWhitespace = (input: string) =>
   input.replace(/\r\n|\r/g, "\n");
 
+// JSON helpers for canonical diffing
+function sortKeysDeep(value: any): any {
+  if (Array.isArray(value)) return value.map(sortKeysDeep);
+  if (value && typeof value === "object" && value.constructor === Object) {
+    const out: Record<string, any> = {};
+    Object.keys(value)
+      .sort()
+      .forEach((k) => {
+        out[k] = sortKeysDeep((value as Record<string, any>)[k]);
+      });
+    return out;
+  }
+  return value;
+}
+
+function toCanonicalJsonString(input: string): string {
+  const parsed = JSON.parse(input);
+  return JSON.stringify(sortKeysDeep(parsed), null, 2);
+}
+
 export function DiffTool() {
   const [leftText, setLeftText] = useState("");
   const [rightText, setRightText] = useState("");
@@ -30,7 +50,10 @@ export function DiffTool() {
   const [ignoreCase, setIgnoreCase] = useState(false);
   const [ignoreWhitespace, setIgnoreWhitespace] = useState(false);
   const [method, setMethod] = useState<DiffMethod>(DiffMethod.LINES);
+  const [jsonMode, setJsonMode] = useState(false);
   const [showDiff, setShowDiff] = useState(false);
+  const [diffA, setDiffA] = useState("");
+  const [diffB, setDiffB] = useState("");
 
   const processed = useMemo(() => {
     const transform = (t: string) => {
@@ -53,7 +76,25 @@ export function DiffTool() {
       toast({ title: "Nothing to compare", description: "Add text or upload files first." });
       return;
     }
-    setShowDiff(true);
+    if (jsonMode) {
+      try {
+        const leftStr = leftText ? toCanonicalJsonString(leftText) : "";
+        const rightStr = rightText ? toCanonicalJsonString(rightText) : "";
+        setDiffA(leftStr);
+        setDiffB(rightStr);
+        setShowDiff(true);
+      } catch (err) {
+        toast({
+          title: "Invalid JSON",
+          description: "Ensure both inputs are valid JSON when JSON mode is enabled.",
+        });
+        setShowDiff(false);
+      }
+    } else {
+      setDiffA(processed.a);
+      setDiffB(processed.b);
+      setShowDiff(true);
+    }
   };
 
   const onSwap = () => {
@@ -166,6 +207,14 @@ export function DiffTool() {
               <Switch checked={ignoreWhitespace} onCheckedChange={setIgnoreWhitespace} />
             </div>
 
+            <div className="flex items-center justify-between rounded-md border p-3">
+              <div className="space-y-0.5">
+                <Label>JSON mode</Label>
+                <p className="text-xs text-muted-foreground">Parse, sort keys, pretty-print objects</p>
+              </div>
+              <Switch checked={jsonMode} onCheckedChange={setJsonMode} />
+            </div>
+
             <div className="rounded-md border p-3">
               <Label className="mb-2 block">Diff granularity</Label>
               <Select
@@ -201,8 +250,8 @@ export function DiffTool() {
           <CardContent>
             <div className="overflow-auto rounded-md border">
               <ReactDiffViewer
-                oldValue={processed.a}
-                newValue={processed.b}
+                oldValue={diffA}
+                newValue={diffB}
                 splitView={splitView}
                 compareMethod={method}
                 useDarkTheme={false}
