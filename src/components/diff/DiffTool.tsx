@@ -49,7 +49,7 @@ export function DiffTool() {
   const [splitView, setSplitView] = useState(true);
   const [ignoreCase, setIgnoreCase] = useState(false);
   const [ignoreWhitespace, setIgnoreWhitespace] = useState(false);
-  const [method, setMethod] = useState<DiffMethod>(DiffMethod.LINES);
+  const [method, setMethod] = useState<'lines' | 'words' | 'chars'>('lines');
   const [jsonMode, setJsonMode] = useState(false);
   const [showDiff, setShowDiff] = useState(false);
   const [diffA, setDiffA] = useState("");
@@ -223,16 +223,16 @@ export function DiffTool() {
               <div className="rounded-md border p-3">
                 <Label className="mb-2 block">Diff granularity</Label>
                 <Select
-                  value={String(method)}
-                  onValueChange={(v) => setMethod(Number(v) as unknown as DiffMethod)}
+                  value={method}
+                  onValueChange={(v) => setMethod(v as 'lines' | 'words' | 'chars')}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select method" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value={String(DiffMethod.LINES)}>Lines</SelectItem>
-                    <SelectItem value={String(DiffMethod.WORDS)}>Words</SelectItem>
-                    <SelectItem value={String(DiffMethod.CHARS)}>Characters</SelectItem>
+                    <SelectItem value="lines">Lines</SelectItem>
+                    <SelectItem value="words">Words</SelectItem>
+                    <SelectItem value="chars">Characters</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -259,7 +259,7 @@ export function DiffTool() {
                 oldValue={diffA}
                 newValue={diffB}
                 splitView={splitView}
-                compareMethod={method}
+                compareMethod={method === 'lines' ? DiffMethod.LINES : method === 'words' ? DiffMethod.WORDS : DiffMethod.CHARS}
                 useDarkTheme={false}
                 hideLineNumbers={false}
               />
