@@ -193,44 +193,50 @@ export function DiffTool() {
 
             <div className="flex items-center justify-between rounded-md border p-3">
               <div className="space-y-0.5">
-                <Label>Ignore case</Label>
-                <p className="text-xs text-muted-foreground">Compare case-insensitively</p>
-              </div>
-              <Switch checked={ignoreCase} onCheckedChange={setIgnoreCase} />
-            </div>
-
-            <div className="flex items-center justify-between rounded-md border p-3">
-              <div className="space-y-0.5">
-                <Label>Ignore whitespace</Label>
-                <p className="text-xs text-muted-foreground">Normalize spaces and tabs</p>
-              </div>
-              <Switch checked={ignoreWhitespace} onCheckedChange={setIgnoreWhitespace} />
-            </div>
-
-            <div className="flex items-center justify-between rounded-md border p-3">
-              <div className="space-y-0.5">
                 <Label>JSON mode</Label>
                 <p className="text-xs text-muted-foreground">Parse, sort keys, pretty-print objects</p>
               </div>
               <Switch checked={jsonMode} onCheckedChange={setJsonMode} />
             </div>
 
-            <div className="rounded-md border p-3">
-              <Label className="mb-2 block">Diff granularity</Label>
-              <Select
-                value={String(method)}
-                onValueChange={(v) => setMethod(Number(v) as unknown as DiffMethod)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select method" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={String(DiffMethod.LINES)}>Lines</SelectItem>
-                  <SelectItem value={String(DiffMethod.WORDS)}>Words</SelectItem>
-                  <SelectItem value={String(DiffMethod.CHARS)}>Characters</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {!jsonMode && (
+              <div className="flex items-center justify-between rounded-md border p-3">
+                <div className="space-y-0.5">
+                  <Label>Ignore case</Label>
+                  <p className="text-xs text-muted-foreground">Compare case-insensitively</p>
+                </div>
+                <Switch checked={ignoreCase} onCheckedChange={setIgnoreCase} />
+              </div>
+            )}
+
+            {!jsonMode && (
+              <div className="flex items-center justify-between rounded-md border p-3">
+                <div className="space-y-0.5">
+                  <Label>Ignore whitespace</Label>
+                  <p className="text-xs text-muted-foreground">Normalize spaces and tabs</p>
+                </div>
+                <Switch checked={ignoreWhitespace} onCheckedChange={setIgnoreWhitespace} />
+              </div>
+            )}
+
+            {!jsonMode && (
+              <div className="rounded-md border p-3">
+                <Label className="mb-2 block">Diff granularity</Label>
+                <Select
+                  value={String(method)}
+                  onValueChange={(v) => setMethod(Number(v) as unknown as DiffMethod)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select method" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={String(DiffMethod.LINES)}>Lines</SelectItem>
+                    <SelectItem value={String(DiffMethod.WORDS)}>Words</SelectItem>
+                    <SelectItem value={String(DiffMethod.CHARS)}>Characters</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
