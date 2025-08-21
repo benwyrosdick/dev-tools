@@ -8,19 +8,18 @@ import JsonTreeViewer from "@/components/JsonTreeViewer";
 
 const JsonViewer = () => {
   const [jsonInput, setJsonInput] = useState("");
-  const [formattedJson, setFormattedJson] = useState("");
   const [parsedJson, setParsedJson] = useState<any>(null);
   const [error, setError] = useState("");
 
   const formatJson = () => {
     try {
       const parsed = JSON.parse(jsonInput);
-      setFormattedJson(JSON.stringify(parsed, null, 2));
+      const formatted = JSON.stringify(parsed, null, 2);
+      setJsonInput(formatted);
       setParsedJson(parsed);
       setError("");
     } catch (err) {
       setError("Invalid JSON format");
-      setFormattedJson("");
       setParsedJson(null);
     }
   };
@@ -28,12 +27,12 @@ const JsonViewer = () => {
   const minifyJson = () => {
     try {
       const parsed = JSON.parse(jsonInput);
-      setFormattedJson(JSON.stringify(parsed));
+      const minified = JSON.stringify(parsed);
+      setJsonInput(minified);
       setParsedJson(parsed);
       setError("");
     } catch (err) {
       setError("Invalid JSON format");
-      setFormattedJson("");
       setParsedJson(null);
     }
   };
@@ -53,17 +52,17 @@ const JsonViewer = () => {
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2 flex-1 min-h-0">
+        <div className="space-y-6 flex-1 flex flex-col min-h-0">
           <Card className="flex flex-col">
             <CardHeader>
-              <CardTitle>Input JSON</CardTitle>
+              <CardTitle>JSON Input</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 flex-1 flex flex-col">
               <Textarea
                 placeholder="Paste your JSON here..."
                 value={jsonInput}
                 onChange={(e) => setJsonInput(e.target.value)}
-                className="flex-1 font-mono resize-none"
+                className="flex-1 font-mono resize-none min-h-[300px]"
               />
               <div className="flex gap-2">
                 <Button onClick={formatJson}>Format</Button>
@@ -73,38 +72,16 @@ const JsonViewer = () => {
             </CardContent>
           </Card>
 
-          <Card className="flex flex-col">
-            <CardHeader>
-              <CardTitle>Output</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-1 flex flex-col min-h-0">
-              <Tabs defaultValue="tree" className="flex-1 flex flex-col min-h-0">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="tree">Tree View</TabsTrigger>
-                  <TabsTrigger value="formatted">Formatted Text</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="tree" className="flex-1 mt-4 min-h-0">
-                  {parsedJson ? (
-                    <JsonTreeViewer data={parsedJson} className="h-full" />
-                  ) : (
-                    <div className="flex items-center justify-center h-full text-muted-foreground border rounded-md">
-                      Parsed JSON will appear here as a collapsible tree...
-                    </div>
-                  )}
-                </TabsContent>
-                
-                <TabsContent value="formatted" className="flex-1 mt-4 min-h-0">
-                  <Textarea
-                    value={formattedJson}
-                    readOnly
-                    className="h-full font-mono resize-none"
-                    placeholder="Formatted JSON will appear here..."
-                  />
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
+          {parsedJson && (
+            <Card className="flex flex-col flex-1 min-h-0">
+              <CardHeader>
+                <CardTitle>Tree View</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1 min-h-0">
+                <JsonTreeViewer data={parsedJson} className="h-full" />
+              </CardContent>
+            </Card>
+          )}
         </div>
       </main>
     </>
