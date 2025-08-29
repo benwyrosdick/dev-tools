@@ -86,13 +86,13 @@ const JsonViewer = () => {
               {error && <p className="text-sm text-destructive">{error}</p>}
             </CardHeader>
             <CardContent className="flex-1 flex flex-col min-h-0">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 min-h-0">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 min-h-0 h-screen">
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="input">Input</TabsTrigger>
                   <TabsTrigger value="tree">Tree View</TabsTrigger>
                 </TabsList>
                 
-                <TabsContent value="input" className="min-h-0">
+                <TabsContent value="input" className="flex-1 flex w-full flex-col min-h-0">
                   <Textarea
                     placeholder="Paste your JSON here..."
                     value={jsonInput}
@@ -101,7 +101,7 @@ const JsonViewer = () => {
                   />
                 </TabsContent>
                 
-                <TabsContent value="tree" className="min-h-0">
+                <TabsContent value="tree" className="flex-1 flex w-full flex-col min-h-0">
                   {parsedJson ? (
                     <div className="flex-1 border rounded-md flex overflow-auto">
                       <JsonTreeViewer data={parsedJson} className="h-full p-3" />
