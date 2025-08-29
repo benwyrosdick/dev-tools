@@ -92,7 +92,7 @@ const JsonViewer = () => {
                   <TabsTrigger value="tree">Tree View</TabsTrigger>
                 </TabsList>
                 
-                <TabsContent value="input" className="flex-1 flex flex-col min-h-0">
+                <TabsContent value="input" className="min-h-0">
                   <Textarea
                     placeholder="Paste your JSON here..."
                     value={jsonInput}
@@ -101,7 +101,7 @@ const JsonViewer = () => {
                   />
                 </TabsContent>
                 
-                <TabsContent value="tree" className="flex-1 flex flex-col min-h-0">
+                <TabsContent value="tree" className="min-h-0">
                   {parsedJson ? (
                     <div className="flex-1 border rounded-md flex overflow-auto">
                       <JsonTreeViewer data={parsedJson} className="h-full p-3" />
