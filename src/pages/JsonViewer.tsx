@@ -20,6 +20,7 @@ const JsonViewer = () => {
       setJsonInput(formatted);
       setParsedJson(parsed);
       setError("");
+      setActiveTab("input");
     } catch (err) {
       setError("Invalid JSON format");
       setParsedJson(null);
@@ -33,6 +34,7 @@ const JsonViewer = () => {
       setJsonInput(minified);
       setParsedJson(parsed);
       setError("");
+      setActiveTab("input");
     } catch (err) {
       setError("Invalid JSON format");
       setParsedJson(null);
