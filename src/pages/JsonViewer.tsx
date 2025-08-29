@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,6 +11,7 @@ const JsonViewer = () => {
   const [jsonInput, setJsonInput] = useState("");
   const [parsedJson, setParsedJson] = useState<any>(null);
   const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState("input");
 
   const formatJson = () => {
     try {
@@ -37,6 +39,20 @@ const JsonViewer = () => {
     }
   };
 
+  const showTreeView = () => {
+    try {
+      if (jsonInput) {
+        const parsed = JSON.parse(jsonInput);
+        setParsedJson(parsed);
+        setError("");
+        setActiveTab("tree");
+      }
+    } catch (err) {
+      setError("Invalid JSON format");
+      setParsedJson(null);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -53,35 +69,44 @@ const JsonViewer = () => {
         </div>
 
         <div className="space-y-6 flex-1 flex flex-col min-h-0">
-          <Card className="flex flex-col">
+          <Card className="flex flex-col flex-1">
             <CardHeader>
-              <CardTitle>JSON Input</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 flex-1 flex flex-col">
-              <Textarea
-                placeholder="Paste your JSON here..."
-                value={jsonInput}
-                onChange={(e) => setJsonInput(e.target.value)}
-                className="flex-1 font-mono resize-none min-h-[300px]"
-              />
+              <CardTitle>JSON Tools</CardTitle>
               <div className="flex gap-2">
                 <Button onClick={formatJson}>Format</Button>
                 <Button onClick={minifyJson} variant="outline">Minify</Button>
+                <Button onClick={showTreeView} variant="outline">Tree View</Button>
               </div>
               {error && <p className="text-sm text-destructive">{error}</p>}
+            </CardHeader>
+            <CardContent className="flex-1 flex flex-col min-h-0">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 min-h-0">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="input">Input</TabsTrigger>
+                  <TabsTrigger value="tree">Tree View</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="input" className="flex-1 flex flex-col min-h-0">
+                  <Textarea
+                    placeholder="Paste your JSON here..."
+                    value={jsonInput}
+                    onChange={(e) => setJsonInput(e.target.value)}
+                    className="flex-1 font-mono resize-none min-h-[400px]"
+                  />
+                </TabsContent>
+                
+                <TabsContent value="tree" className="flex-1 min-h-0">
+                  {parsedJson ? (
+                    <JsonTreeViewer data={parsedJson} className="h-full" />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-muted-foreground">
+                      Enter valid JSON in the Input tab to view the tree structure
+                    </div>
+                  )}
+                </TabsContent>
+              </Tabs>
             </CardContent>
           </Card>
-
-          {parsedJson && (
-            <Card className="flex flex-col flex-1 min-h-0">
-              <CardHeader>
-                <CardTitle>Tree View</CardTitle>
-              </CardHeader>
-              <CardContent className="flex-1 min-h-0">
-                <JsonTreeViewer data={parsedJson} className="h-full" />
-              </CardContent>
-            </Card>
-          )}
         </div>
       </main>
     </>
