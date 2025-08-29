@@ -103,7 +103,7 @@ const JsonViewer = () => {
                 
                 <TabsContent value="tree" className="flex-1 flex flex-col min-h-0">
                   {parsedJson ? (
-                    <div className="flex-1 border rounded-md overflow-auto">
+                    <div className="flex-1 border rounded-md flex overflow-auto">
                       <JsonTreeViewer data={parsedJson} className="h-full p-3" />
                     </div>
                   ) : (
