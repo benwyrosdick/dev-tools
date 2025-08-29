@@ -101,11 +101,13 @@ const JsonViewer = () => {
                   />
                 </TabsContent>
                 
-                <TabsContent value="tree" className="flex-1 min-h-0">
+                <TabsContent value="tree" className="flex-1 flex flex-col min-h-0">
                   {parsedJson ? (
-                    <JsonTreeViewer data={parsedJson} className="h-full" />
+                    <div className="flex-1 border rounded-md overflow-auto">
+                      <JsonTreeViewer data={parsedJson} className="h-full p-3" />
+                    </div>
                   ) : (
-                    <div className="flex items-center justify-center h-full text-muted-foreground">
+                    <div className="flex-1 border rounded-md flex items-center justify-center text-muted-foreground">
                       Enter valid JSON in the Input tab to view the tree structure
                     </div>
                   )}
