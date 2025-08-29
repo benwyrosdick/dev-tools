@@ -12,6 +12,7 @@ const JsonViewer = () => {
   const [parsedJson, setParsedJson] = useState<any>(null);
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("input");
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
 
   const formatJson = () => {
     try {
@@ -21,6 +22,7 @@ const JsonViewer = () => {
       setParsedJson(parsed);
       setError("");
       setActiveTab("input");
+      setSelectedAction("format");
     } catch (err) {
       setError("Invalid JSON format");
       setParsedJson(null);
@@ -35,6 +37,7 @@ const JsonViewer = () => {
       setParsedJson(parsed);
       setError("");
       setActiveTab("input");
+      setSelectedAction("minify");
     } catch (err) {
       setError("Invalid JSON format");
       setParsedJson(null);
@@ -48,6 +51,7 @@ const JsonViewer = () => {
         setParsedJson(parsed);
         setError("");
         setActiveTab("tree");
+        setSelectedAction("tree");
       }
     } catch (err) {
       setError("Invalid JSON format");
@@ -75,9 +79,9 @@ const JsonViewer = () => {
             <CardHeader>
               <CardTitle>JSON Tools</CardTitle>
               <div className="flex gap-2">
-                <Button onClick={formatJson}>Format</Button>
-                <Button onClick={minifyJson} variant="outline">Minify</Button>
-                <Button onClick={showTreeView} variant="outline">Tree View</Button>
+                <Button onClick={formatJson} variant={selectedAction === "format" ? "default" : "outline"}>Format</Button>
+                <Button onClick={minifyJson} variant={selectedAction === "minify" ? "default" : "outline"}>Minify</Button>
+                <Button onClick={showTreeView} variant={selectedAction === "tree" ? "default" : "outline"}>Tree View</Button>
               </div>
               {error && <p className="text-sm text-destructive">{error}</p>}
             </CardHeader>
