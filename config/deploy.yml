@@ -7,7 +7,10 @@ image: benwyrosdick/dev-tools
 # Deploy to these servers.
 servers:
   web:
-    - house.wyrosdick.com
+    hosts:
+      - house.wyrosdick.com
+    options:
+      ssh_port: 2222
   # job:
   #   hosts:
   #     - 192.168.0.1
