@@ -7,10 +7,7 @@ image: benwyrosdick/dev-tools
 # Deploy to these servers.
 servers:
   web:
-    hosts:
-      - house.wyrosdick.com
-    options:
-      ssh_port: 2222
+    - house.wyrosdick.com
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -60,7 +57,8 @@ builder:
 
 # Use a different ssh user than root
 #
-# ssh:
+ssh:
+    port: "2222"
 #   user: app
 
 # Use a persistent storage volume.
