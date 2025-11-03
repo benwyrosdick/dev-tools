@@ -65,18 +65,18 @@ const JsonViewer = () => {
         <meta name="description" content="Format, validate, and beautify JSON data with our online JSON viewer tool." />
       </Helmet>
 
-      <main className="container py-8 h-screen flex flex-col">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold tracking-tight">JSON Viewer</h1>
+      <main className="container py-8 flex flex-col overflow-hidden" style={{ height: 'calc(100vh - 3.5rem)' }}>
+        <div className="mb-6 flex-shrink-0">
+          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">JSON Viewer</h1>
           <p className="mt-2 text-muted-foreground">
             Format, validate, and beautify your JSON data.
           </p>
         </div>
 
-        <div className="space-y-6 flex-1 flex flex-col min-h-0">
-          <Card className="flex flex-col flex-1 border-primary/20 shadow-lg shadow-primary/5">
-            <CardHeader>
-              <CardTitle>JSON Tools</CardTitle>
+        <div className="flex-1 flex flex-col min-h-0">
+          <Card className="flex flex-col flex-1 border-primary/20 shadow-lg shadow-primary/5 min-h-0">
+            <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5">
+              <CardTitle className="text-primary">JSON Tools</CardTitle>
               <div className="flex gap-2">
                 <Button onClick={formatJson} variant={selectedAction === "format" ? "default" : "outline"} className={selectedAction === "format" ? "bg-primary hover:bg-primary/90" : ""}>Format</Button>
                 <Button onClick={minifyJson} variant={selectedAction === "minify" ? "default" : "outline"} className={selectedAction === "minify" ? "bg-secondary hover:bg-secondary/90" : ""}>Minify</Button>
@@ -84,7 +84,7 @@ const JsonViewer = () => {
               </div>
               {error && <p className="text-sm text-destructive">{error}</p>}
             </CardHeader>
-            <CardContent className="flex-1 flex flex-col min-h-0 pb-0">
+            <CardContent className="flex-1 flex flex-col min-h-0 pb-6 mt-4">
               {activeTab === "input" ? (
                 <Textarea
                   placeholder="Paste your JSON here..."
@@ -94,11 +94,11 @@ const JsonViewer = () => {
                 />
               ) : (
                 parsedJson ? (
-                  <div className="flex-1 border rounded-md overflow-auto mb-6">
+                  <div className="flex-1 border rounded-md overflow-auto min-h-0">
                     <JsonTreeViewer data={parsedJson} className="p-3" />
                   </div>
                 ) : (
-                  <div className="flex-1 border rounded-md flex items-center justify-center text-muted-foreground mb-6">
+                  <div className="flex-1 border rounded-md flex items-center justify-center text-muted-foreground">
                     Enter valid JSON and click Tree View to see the tree structure
                   </div>
                 )
