@@ -51,18 +51,18 @@ const CryptoTools = () => {
 
       <main className="container py-8">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold tracking-tight">Crypto Tools</h1>
+          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">Crypto Tools</h1>
           <p className="mt-2 text-muted-foreground">
             Encode, decode, and hash your text data.
           </p>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>Input</CardTitle>
+          <Card className="border-primary/20 shadow-lg shadow-primary/5">
+            <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5">
+              <CardTitle className="text-primary">Input</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="mt-4">
               <Textarea
                 placeholder="Enter your text here..."
                 value={input}
@@ -72,11 +72,11 @@ const CryptoTools = () => {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Output</CardTitle>
+          <Card className="border-primary/20 shadow-lg shadow-primary/5">
+            <CardHeader className="bg-gradient-to-r from-secondary/5 to-accent/5">
+              <CardTitle className="text-secondary">Output</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="mt-4">
               <Textarea
                 value={output}
                 readOnly
@@ -87,11 +87,11 @@ const CryptoTools = () => {
           </Card>
         </div>
 
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle>Tools</CardTitle>
+        <Card className="mt-6 border-primary/20 shadow-lg shadow-primary/5">
+          <CardHeader className="bg-gradient-to-r from-accent/5 to-primary/5">
+            <CardTitle className="text-accent">Tools</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="mt-4">
             <Tabs defaultValue="base64" className="w-full">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="base64">Base64</TabsTrigger>

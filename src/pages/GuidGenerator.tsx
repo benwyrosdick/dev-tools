@@ -77,18 +77,18 @@ const GuidGenerator = () => {
 
       <main className="container py-8">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold tracking-tight">GUID Generator</h1>
+          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">GUID Generator</h1>
           <p className="mt-2 text-muted-foreground">
             Generate unique identifiers (GUIDs/UUIDs).
           </p>
         </div>
 
         <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Generator Settings</CardTitle>
+          <Card className="border-primary/20 shadow-lg shadow-primary/5">
+            <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5">
+              <CardTitle className="text-primary">Generator Settings</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 mt-4">
               <div>
                 <Label className="text-base font-medium">GUID Version</Label>
                 <RadioGroup value={version} onValueChange={(value) => setVersion(value as "v4" | "v7")} className="mt-2">
@@ -126,9 +126,9 @@ const GuidGenerator = () => {
           </Card>
 
           {guids.length > 0 && (
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Generated GUIDs</CardTitle>
+            <Card className="border-primary/20 shadow-lg shadow-primary/5">
+              <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-secondary/5 to-accent/5">
+                <CardTitle className="text-secondary">Generated GUIDs</CardTitle>
                 <Button onClick={copyAllToClipboard} variant="outline" size="sm">
                   <Copy className="h-4 w-4 mr-2" />
                   Copy All

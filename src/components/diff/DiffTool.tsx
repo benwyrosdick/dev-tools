@@ -104,11 +104,11 @@ export function DiffTool() {
 
   return (
     <section className="w-full">
-      <Card className="border-muted">
-        <CardHeader>
-          <CardTitle className="text-xl">Input</CardTitle>
+      <Card className="border-primary/20 shadow-lg shadow-primary/5">
+        <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5">
+          <CardTitle className="text-xl text-primary">Input</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="mt-4">
           <Tabs defaultValue="paste" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="paste">Paste text</TabsTrigger>
@@ -249,9 +249,9 @@ export function DiffTool() {
       </Card>
 
       {showDiff && (
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle className="text-xl">Result</CardTitle>
+        <Card className="mt-6 border-primary/20 shadow-lg shadow-primary/5">
+          <CardHeader className="bg-gradient-to-r from-secondary/5 to-accent/5">
+            <CardTitle className="text-xl text-secondary">Result</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-auto rounded-md border">
