@@ -20,7 +20,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="min-h-screen bg-background">
+          <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
             <Navigation />
             <Routes>
               <Route path="/" element={<DiffToolPage />} />

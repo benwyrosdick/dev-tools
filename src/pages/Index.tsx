@@ -14,9 +14,9 @@ const Index = () => {
         <meta property="og:description" content="Paste or upload text files and see a visual diff." />
       </Helmet>
 
-      <header className="border-b bg-background">
+      <header className="border-b bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 backdrop-blur-sm">
         <div className="container py-8">
-          <h1 className="text-3xl font-bold tracking-tight">Visual Text Diff Tool</h1>
+          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">Visual Text Diff Tool</h1>
           <p className="mt-2 text-muted-foreground">
             Paste text or upload files to compare differences.
           </p>
