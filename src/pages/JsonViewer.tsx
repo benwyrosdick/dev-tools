@@ -85,29 +85,29 @@ const JsonViewer = () => {
               </div>
               {error && <p className="text-sm text-destructive">{error}</p>}
             </CardHeader>
-            <CardContent className="flex-1 flex flex-col min-h-0">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 min-h-0 h-screen">
-                <TabsList className="grid w-full grid-cols-2">
+            <CardContent className="flex-1 flex flex-col min-h-0 pb-0">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 min-h-0">
+                <TabsList className="grid w-full grid-cols-2 mb-4">
                   <TabsTrigger value="input">Input</TabsTrigger>
                   <TabsTrigger value="tree">Tree View</TabsTrigger>
                 </TabsList>
                 
-                <TabsContent value="input" className="flex-1 flex flex-col min-h-0 mt-0">
+                <TabsContent value="input" className="flex-1 flex flex-col min-h-0 m-0 data-[state=inactive]:hidden">
                   <Textarea
                     placeholder="Paste your JSON here..."
                     value={jsonInput}
                     onChange={(e) => setJsonInput(e.target.value)}
-                    className="flex-1 font-mono resize-none min-h-[400px]"
+                    className="flex-1 font-mono resize-none"
                   />
                 </TabsContent>
                 
-                <TabsContent value="tree" className="flex-1 flex flex-col min-h-0 mt-0">
+                <TabsContent value="tree" className="flex-1 flex flex-col min-h-0 m-0 data-[state=inactive]:hidden">
                   {parsedJson ? (
-                    <div className="flex-1 border rounded-md flex overflow-auto">
-                      <JsonTreeViewer data={parsedJson} className="h-full p-3" />
+                    <div className="flex-1 border rounded-md overflow-auto mb-6">
+                      <JsonTreeViewer data={parsedJson} className="p-3" />
                     </div>
                   ) : (
-                    <div className="flex-1 border rounded-md flex items-center justify-center text-muted-foreground">
+                    <div className="flex-1 border rounded-md flex items-center justify-center text-muted-foreground mb-6">
                       Enter valid JSON in the Input tab to view the tree structure
                     </div>
                   )}
