@@ -1,73 +1,41 @@
-# Welcome to your Lovable project
+# dev-tools
 
-## Project info
+A small collection of browser-based developer utilities.
 
-**URL**: https://lovable.dev/projects/ea0e837a-7a7c-4d84-b538-8981557980db
+## Tools
 
-## How can I edit this code?
+- **Diff** — side-by-side text/code diff viewer
+- **JSON Viewer** — parse, format, and explore JSON as a tree
+- **JWT Viewer** — decode and inspect JWT headers and payloads
+- **Crypto Tools** — hashing and encoding helpers
+- **GUID Generator** — generate UUIDs/GUIDs
 
-There are several ways of editing your application.
+## Stack
 
-**Use Lovable**
+Vite, React, TypeScript, Tailwind CSS, shadcn/ui, React Router.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ea0e837a-7a7c-4d84-b538-8981557980db) and start prompting.
+## Development
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Requires Node.js and npm (or bun).
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Other scripts:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `npm run build` — production build
+- `npm run lint` — run ESLint
+- `npm run preview` — serve the production build locally
 
-**Use GitHub Codespaces**
+## Docker
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+A multi-stage `Dockerfile` builds the app and serves it with nginx.
 
-## What technologies are used for this project?
+```sh
+docker build -t dev-tools .
+docker run -p 8080:80 dev-tools
+```
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/ea0e837a-7a7c-4d84-b538-8981557980db) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+A health endpoint is exposed at `/up`.
