@@ -38,44 +38,30 @@ const JwtViewer = () => {
     }
   };
 
-  const verifySignature = async () => {
-    if (!jwtInput || !secretKey) {
+  const verifySignature = async (token: string, secret: string) => {
+    if (!token || !secret) {
       setSignatureStatus(null);
       return;
     }
 
     try {
-      const parts = jwtInput.split('.');
+      const parts = token.split('.');
       const headerPayload = `${parts[0]}.${parts[1]}`;
-      
-      // Convert secret to array buffer
       const encoder = new TextEncoder();
-      const keyData = encoder.encode(secretKey);
-      
-      // Import key
       const key = await crypto.subtle.importKey(
         'raw',
-        keyData,
+        encoder.encode(secret),
         { name: 'HMAC', hash: 'SHA-256' },
         false,
         ['sign']
       );
-      
-      // Sign the header.payload
-      const signature = await crypto.subtle.sign(
-        'HMAC',
-        key,
-        encoder.encode(headerPayload)
-      );
-      
-      // Convert to base64url
+      const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(headerPayload));
       const base64Signature = btoa(String.fromCharCode(...new Uint8Array(signature)))
         .replace(/\+/g, '-')
         .replace(/\//g, '_')
         .replace(/=/g, '');
-      
       setSignatureStatus(base64Signature === parts[2] ? "valid" : "invalid");
-    } catch (err) {
+    } catch {
       setSignatureStatus("invalid");
     }
   };
@@ -96,7 +82,7 @@ const JwtViewer = () => {
   const handleSecretChange = (value: string) => {
     setSecretKey(value);
     if (value && jwtInput) {
-      verifySignature();
+      verifySignature(jwtInput, value);
     } else {
       setSignatureStatus(null);
     }

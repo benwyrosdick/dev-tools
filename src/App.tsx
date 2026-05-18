@@ -28,7 +28,6 @@ const App = () => (
               <Route path="/jwt-viewer" element={<JwtViewer />} />
               <Route path="/crypto-tools" element={<CryptoTools />} />
               <Route path="/guid-generator" element={<GuidGenerator />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import ReactDiffViewer, { DiffMethod } from "react-diff-viewer-continued";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -22,7 +22,6 @@ function readFileAsText(file: File): Promise<string> {
 const sanitizeWhitespace = (input: string) =>
   input.replace(/\r\n|\r/g, "\n");
 
-// JSON helpers for canonical diffing
 function sortKeysDeep(value: any): any {
   if (Array.isArray(value)) return value.map(sortKeysDeep);
   if (value && typeof value === "object" && value.constructor === Object) {
@@ -55,21 +54,17 @@ export function DiffTool() {
   const [diffA, setDiffA] = useState("");
   const [diffB, setDiffB] = useState("");
 
-  const processed = useMemo(() => {
-    const transform = (t: string) => {
-      let out = sanitizeWhitespace(t ?? "");
-      if (ignoreWhitespace) {
-        // Normalize all whitespace runs to a single space but keep newlines
-        out = out
-          .split("\n")
-          .map((line) => line.replace(/\s+/g, " ").trimEnd())
-          .join("\n");
-      }
-      if (ignoreCase) out = out.toLowerCase();
-      return out;
-    };
-    return { a: transform(leftText), b: transform(rightText) };
-  }, [leftText, rightText, ignoreCase, ignoreWhitespace]);
+  const transform = (t: string) => {
+    let out = sanitizeWhitespace(t ?? "");
+    if (ignoreWhitespace) {
+      out = out
+        .split("\n")
+        .map((line) => line.replace(/\s+/g, " ").trimEnd())
+        .join("\n");
+    }
+    if (ignoreCase) out = out.toLowerCase();
+    return out;
+  };
 
   const onCompare = () => {
     if (!leftText && !rightText) {
@@ -83,7 +78,7 @@ export function DiffTool() {
         setDiffA(leftStr);
         setDiffB(rightStr);
         setShowDiff(true);
-      } catch (err) {
+      } catch {
         toast({
           title: "Invalid JSON",
           description: "Ensure both inputs are valid JSON when JSON mode is enabled.",
@@ -91,8 +86,8 @@ export function DiffTool() {
         setShowDiff(false);
       }
     } else {
-      setDiffA(processed.a);
-      setDiffB(processed.b);
+      setDiffA(transform(leftText));
+      setDiffB(transform(rightText));
       setShowDiff(true);
     }
   };

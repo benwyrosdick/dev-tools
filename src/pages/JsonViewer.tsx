@@ -10,8 +10,8 @@ const JsonViewer = () => {
   const [jsonInput, setJsonInput] = useState("");
   const [parsedJson, setParsedJson] = useState<any>(null);
   const [error, setError] = useState("");
-  const [activeTab, setActiveTab] = useState("input");
-  const [selectedAction, setSelectedAction] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"input" | "tree">("input");
+  const [selectedAction, setSelectedAction] = useState<"format" | "minify" | "tree" | null>(null);
 
   const formatJson = () => {
     try {

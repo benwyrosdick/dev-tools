@@ -2,13 +2,12 @@ import DiffTool from "@/components/diff/DiffTool";
 import { Helmet } from "react-helmet-async";
 
 const DiffToolPage = () => {
-  const canonical = typeof window !== 'undefined' ? window.location.href : '/';
   return (
     <>
       <Helmet>
         <title>Visual Text Diff Tool | Compare Files & Strings</title>
         <meta name="description" content="Compare two text files or strings with a visual diff. Paste or upload and see differences side-by-side or unified." />
-        <link rel="canonical" href={canonical} />
+        <link rel="canonical" href={window.location.href} />
         <meta name="robots" content="index,follow" />
         <meta property="og:title" content="Visual Text Diff Tool" />
         <meta property="og:description" content="Paste or upload text files and see a visual diff." />

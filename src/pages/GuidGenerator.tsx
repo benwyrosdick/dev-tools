@@ -14,36 +14,20 @@ const GuidGenerator = () => {
   const [version, setVersion] = useState<"v4" | "v7">("v4");
   const { toast } = useToast();
 
-  const generateGuidV4 = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      const r = Math.random() * 16 | 0;
-      const v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  };
+  const generateGuidV4 = () => crypto.randomUUID();
 
   const generateGuidV7 = () => {
-    // UUID v7 format: timestamp (48 bits) + version (4 bits) + random (12 bits) + variant (2 bits) + random (62 bits)
-    const timestamp = Date.now();
-    const timestampHex = timestamp.toString(16).padStart(12, '0');
-    
-    // Generate random bytes for the rest
+    const timestampHex = Date.now().toString(16).padStart(12, '0');
     const randomBytes = new Uint8Array(10);
     crypto.getRandomValues(randomBytes);
-    
-    // Convert to hex string
     const randomHex = Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('');
-    
-    // Construct UUID v7
-    const uuid = [
+    return [
       timestampHex.substring(0, 8),
       timestampHex.substring(8, 12),
-      '7' + randomHex.substring(0, 3), // Version 7
-      ((parseInt(randomHex.substring(3, 4), 16) & 0x3) | 0x8).toString(16) + randomHex.substring(4, 7), // Variant bits
-      randomHex.substring(7, 19)
+      '7' + randomHex.substring(0, 3),
+      ((parseInt(randomHex.substring(3, 4), 16) & 0x3) | 0x8).toString(16) + randomHex.substring(4, 7),
+      randomHex.substring(7, 19),
     ].join('-');
-    
-    return uuid;
   };
 
   const generateGuids = () => {
