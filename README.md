@@ -16,18 +16,18 @@ Vite, React, TypeScript, Tailwind CSS, shadcn/ui, React Router.
 
 ## Development
 
-Requires Node.js and npm (or bun).
+Requires [Bun](https://bun.sh).
 
 ```sh
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 Other scripts:
 
-- `npm run build` — production build
-- `npm run lint` — run ESLint
-- `npm run preview` — serve the production build locally
+- `bun run build` — production build
+- `bun run lint` — run ESLint
+- `bun run preview` — serve the production build locally
 
 ## Docker
 
